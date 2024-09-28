@@ -8,7 +8,71 @@ packages = [{include = "agent_app"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pydantic = "^2.9.0"
+fastapi = "^0.115.0"
+httpx = "^0.27.0"
+langchain-core = "^0.3.0"
+langchain-community = "^0.3.0"
+langchain-openai = "^0.2.0"
+langchain-postgres = "^0.0.12"
+langgraph = "^0.2.22"
+langgraph-checkpoint = "^1.0.10"
+langgraph-checkpoint-sqlite = "^1.0.3"
+psycopg = { version = "^3.1.10", extras = ["binary", "pool"] }
+python-dotenv = "^1.0.1"
+setuptools = "^74.0.0"
+uvicorn = "^0.30.5"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+pylint = "^3.2.6"
+mypy = "^1.11.1"
+pytest-cov = "^5.0.0"
+httpx = "^0.27.0"
+types-requests = "^2.31.0.20240106"
+ruff = "^0.5.6"
+black = "^24.8.0"
+
+
+[tool.pylint]
+[tool.pylint.'BASIC']
+good-names = ["f,i,j,k,ex,Run,_"]
+
+[tool.pylint.messages_control]
+disable = ["fixme"]
+
+[tool.pylint.'FORMAT']
+max-line-length = 120
+
+[[tool.mypy.overrides]]
+module = ["sscil.*", "boto3.*"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = [
+    "tests/",
+] # We exclude tests with ruff, as a lot of the rules in src/ aren't applicable to tests/
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D",
+    "PLE1205",
+    "I001",
+    "ANN101",
+    "TID252",
+    "DTZ005",
+    "TD002",
+    "TD003",
+    "T201",
+    "PLR2004",
+    "RET504",
+]
+
+[tool.pytest_env]
+OPENAI_API_KEY = "sk-fake-openai-key"
 
 [build-system]
 requires = ["poetry-core"]
